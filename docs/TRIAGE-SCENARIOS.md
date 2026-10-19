@@ -1,4 +1,5 @@
 ---
+title: "Triage scenarios: which errors become issues"
 description: "What happens to an error in Code Akos between arriving and becoming a GitHub issue, scenario by scenario."
 ---
 
