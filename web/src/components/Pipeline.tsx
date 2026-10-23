@@ -21,7 +21,7 @@ export function Pipeline({ counts, compact = false, roomy = false }: { counts: n
           return (
             <li key={key} className={bare ? 'flex min-w-0 flex-col gap-1.5' : 'relative flex flex-col gap-2 border-border p-4 max-lg:odd:border-r max-lg:nth-[n+3]:border-t max-lg:last:col-span-2 max-lg:last:border-r-0'}>
               <p className={bare ? 'truncate text-xs text-muted-foreground' : 'text-sm text-muted-foreground'}>{stage.label}</p>
-              <p className={roomy ? 'text-3xl font-semibold tracking-tight' : compact ? 'text-xl font-semibold tracking-tight' : 'text-3xl font-semibold tracking-tight'}>{formatCount(n)}</p>
+              <p className={roomy ? 'text-2xl font-display font-semibold tracking-tight' : compact ? 'text-xl font-display font-semibold tracking-tight' : 'text-2xl font-display font-semibold tracking-tight'}>{formatCount(n)}</p>
               <div className={roomy ? 'h-2 rounded-full bg-border' : 'h-1.5 rounded-full bg-border'} aria-hidden>
                 <div className="h-full rounded-full bg-chart-1 transition-[width] duration-150 ease-out motion-reduce:transition-none" style={{ width: `${pct}%` }} />
               </div>

@@ -9,3 +9,15 @@ docs/internal/
 
 .DS_Store
 __pycache__/
+
+# Instructions and config for AI coding agents stay on this machine
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+.claude/
+.cursor/
+.cursorrules
+.windsurfrules
+.github/copilot-instructions.md
+.mcp.json

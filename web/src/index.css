@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/ibm-plex-sans";
 @import "@fontsource-variable/geist-mono";
 
 /* Dark-only app: the `dark` class is set on <html> in index.html. Tokens are documented in DESIGN.md.
@@ -40,8 +41,23 @@
 }
 
 @theme inline {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Type scale: ratio 1.200 from 14px (DESIGN.md §10). These are the only sizes. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 2rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.8125rem;
+  --text-2xl--line-height: 2.5rem;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -76,6 +92,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  h1, h2, h3 {
+    @apply font-display;
   }
   body {
     @apply bg-background font-sans text-foreground antialiased;

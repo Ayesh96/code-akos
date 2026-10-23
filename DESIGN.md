@@ -33,7 +33,7 @@ The base is shadcn's `neutral` dark theme, shifted toward the app icon: its navy
 | `--status-stopped` | `#898781` | icon only |
 | `--status-crashed` | `#d03b3b` | icon only |
 
-Type: **Geist Sans** for UI, **Geist Mono** for paths/commands/logs (self-hosted via `@fontsource-variable`, works offline). Scale: 12 / 13 / 14 / 16 / 20 / 28. Big standalone numbers use proportional figures; `tabular-nums` only in table columns.
+Type: **IBM Plex Sans** for UI, **Bricolage Grotesque** for headings and big counts, **Geist Mono** for paths/commands/logs (self-hosted via `@fontsource-variable`, works offline). Scale: 12 / 14 / 17 / 20 / 24 / 29 (§10). Big standalone numbers use proportional figures; `tabular-nums` only in table columns.
 Spacing: Tailwind 4px scale; page gutter 16 (mobile) / 24; max width 1152px.
 Motion: 150ms ease-out for hover/focus; sheet/dialog use shadcn's enter/exit; everything respects `prefers-reduced-motion`.
 
@@ -106,3 +106,241 @@ The server holds GitHub tokens and can push code, so access is layered:
 5. **CSP** (`default-src 'self'`, no inline/eval scripts), `X-Frame-Options: DENY`, `nosniff`, `no-referrer`, `Cache-Control: no-store` on `/api`.
 6. **Argument arrays, not shells**: git and the model's tools use `execFile`; the only shell is a project's own check command, which the user wrote.
 7. The data folder (token, databases, key) is created `0700`.
+
+---
+
+# Part 2: Anti-slop design rules
+
+Sections 1 to 7 record what is built. Sections 8 to 19 are the rules every new screen and every change MUST follow. Where a rule conflicts with a decision in Part 1, §8 lists the conflict and a proposed replacement. The decisions are in §21. The code does not match them yet; Part 1 describes what is built today.
+
+## 8. Audit of Part 1 and conflicts
+
+| Section | Problem | Fix |
+|---|---|---|
+| §1 Foundations | No stated personality and no reference sites. | §9 adds both. Reference sites are an open question. |
+| §2 Type | Geist Sans is the primary font. Geist is banned as a primary font. | Decided: display Bricolage Grotesque, body IBM Plex Sans, mono stays Geist Mono (§10). |
+| §2 Type | Scale 12 / 13 / 14 / 16 / 20 / 28 has no ratio. | 1.200 scale from 14px: 12 / 14 / 17 / 20 / 24 / 29 (§10). |
+| §2 Spacing | Tailwind 4px scale allows any multiple of 4. | 8px grid with named tokens (§12). 4px only inside a control. |
+| §2 Colors | Three status colors on top of six palette colors exceeds 6 named colors. | Status colors are data marks, not palette colors. `crashed` reuses `danger` (§11). |
+| §3 Project card | The grid of identical project cards is a wall of identical cards. | Decided: one list, sorted by what needs attention, one row per project. Cards only for the detail view (§12). |
+| §3 Overview strip | Three equal stat tiles. Same pattern as three equal cards. | Decided: one line of text per fact, numbers in the type scale. |
+| §4 States | State coverage is spread across sections. | §14 defines one matrix every component fills in. |
+| §6 Copy | No ban on slop phrasing, no rule for mockup data. | §15 and §16. |
+| §5 Accessibility | Good. Missing: mobile width and error-to-field wiring as rules. | §18. |
+| Whole file | No banned list, no ship checklist. | §19 and §20. |
+
+## 9. Design direction
+
+Code Akos is a calm instrument panel for a developer who wants to know which production errors have become pull requests and which need a person. It is quiet when nothing is wrong and exact when something is. It reads like a well-kept logbook: dense, plain, and trustworthy, with no marketing voice.
+
+- MUST describe the product in these terms in every design brief.
+- Reference sites: Vercel and Linear (§21). Supabase from Part 1 stays as a secondary reference for tables.
+- MUST NOT add decoration that does not carry data.
+
+## 10. Typography
+
+| Role | Font | Fallback | Status |
+|---|---|---|---|
+| Display (page titles, big counts) | Bricolage Grotesque | `ui-sans-serif, sans-serif` | Decided (§21). Replaces Geist Sans. |
+| Body (UI text) | IBM Plex Sans | `ui-sans-serif, sans-serif` | Decided (§21). Replaces Geist Sans. |
+| Mono (paths, commands, logs) | Geist Mono | `ui-monospace, monospace` | Kept. Mono is not a primary font. |
+
+Fonts MUST be self-hosted through `@fontsource-variable`, so the app works offline.
+
+**Scale.** Ratio 1.200, base 14px. These are the only sizes allowed.
+
+| Token | Size | Weight | Line height | Use |
+|---|---|---|---|---|
+| `text-xs` | 12px | 400 | 16px | helper text, timestamps |
+| `text-sm` | 14px | 400 / 500 | 20px | body, table cells, buttons |
+| `text-md` | 17px | 500 | 24px | card and section titles |
+| `text-lg` | 20px | 600 | 32px | dialog and drawer titles |
+| `text-xl` | 24px | 600 | 32px | page title |
+| `text-2xl` | 29px | 600 | 40px | big counts |
+
+- MUST NOT use Inter, Roboto, Arial, Open Sans, Lato, the system default, Space Grotesk or Geist as a primary font.
+- MUST NOT use a size outside the table. MUST NOT use arbitrary values such as `text-[13px]`.
+- MUST use only weights 400, 500 and 600.
+- MUST keep body line length under 75 characters.
+
+## 11. Color
+
+| Name | Value | Role |
+|---|---|---|
+| `background` | `#090a12` | page |
+| `surface` | `#12141d` | tiles, dialogs, sheet, table |
+| `text` | `#f7f8fa` | primary text. Secondary text is `#a3a7b3` (7.6:1 on surface). |
+| `primary` | `#e8eaf0` | the one primary action per screen |
+| `accent` | `#2589fe` | data marks and in-progress icons only |
+| `danger` | `#e5484d` | destructive actions and failures |
+
+- `primary` MUST do one job: mark the single main action. It MUST NOT color links, headings or decoration.
+- `accent` MUST NOT fill a button.
+- Text MUST meet WCAG AA: 4.5:1 for text under 24px, 3:1 for large text and for UI borders and icons. Every new color pair MUST be checked before merge.
+- MUST NOT use gradients, gradient text, neon glow, or any purple, indigo or blue gradient.
+- Status icon colors (`running`, `stopped`) are data marks. MUST NOT use them for text or buttons. `crashed` MUST use `danger`; `#d03b3b` is replaced by `#e5484d` (4.69:1 on surface, §22).
+- Color MUST NOT be the only signal (see §18).
+
+## 12. Spacing and layout
+
+**Grid.** Everything sits on an 8px grid.
+
+| Token | Value | Use |
+|---|---|---|
+| `space-1` | 4px | inside a control only (icon to label) |
+| `space-2` | 8px | related items |
+| `space-3` | 16px | items in one group, page gutter on mobile |
+| `space-4` | 24px | groups in one section, page gutter on desktop |
+| `space-5` | 32px | sections |
+| `space-6` | 48px | page regions |
+
+- MUST use only these tokens. MUST NOT use arbitrary values such as `p-[13px]`.
+- Related items MUST sit closer than unrelated items. The gap between groups MUST be at least twice the gap inside a group.
+- **Radius set** (3 values, no more): 4px chips, 6px controls, 8px cards and dialogs. MUST NOT use `rounded-full` on a container. Circles are for avatars and icon dots only.
+- **Shadow set** (2 values, no more): `shadow-sm` for menus and popovers, `shadow-lg` for the drawer and dialogs. Panels on the page MUST use a hairline border, not a shadow.
+- **Layout follows the task.** The core task is: see what needs attention, open it, act on it. Screens MUST put the item that needs attention first, sorted by urgency.
+- MUST NOT build a centered hero with three equal cards and icons.
+- MUST NOT show more than three identical cards in a row of content. A list of many equal items MUST be a table or a list.
+- A card MUST exist only when its elevation shows hierarchy (a detail panel over a list). Grouping alone MUST use spacing or a hairline.
+
+## 13. Components
+
+- Each screen MUST have exactly one primary action.
+- Button hierarchy:
+
+| Level | Style | Use |
+|---|---|---|
+| Primary | filled `primary` | the one main action |
+| Secondary | outline | other actions of equal weight to the task |
+| Tertiary | text only | low-weight actions, links |
+| Destructive | filled `danger` | delete only, always confirmed (§16) |
+
+- Icons MUST come from one set: `lucide-react`. MUST NOT mix sets.
+- MUST NOT use emoji as icons or as decoration.
+- Icon-only buttons MUST have an `aria-label` and a tooltip.
+- MUST build on shadcn primitives (Part 1, §1). MUST NOT add a bespoke dialog, select or switch.
+
+## 14. State matrix
+
+Every component and every data-driven screen MUST define all eight states before it ships. Copy this table into the pull request description and fill it in.
+
+| State | What the user sees | Rule |
+|---|---|---|
+| Default | resting appearance | |
+| Hover | background shifts one step; cursor changes only on clickable items | MUST appear on every clickable item |
+| Active | pressed: one step darker than hover | |
+| Focus-visible | 2px ring in `--ring` | MUST be visible on keyboard focus, MUST NOT hide on mouse click |
+| Disabled | 50% opacity, `aria-disabled`, tooltip says why | MUST explain why when the reason is not obvious |
+| Loading | skeleton with the shape of the final layout | MUST NOT use a centered spinner for a page or list |
+| Empty | what lives here, plus one action | MUST include one action |
+| Error | what happened, why, how to recover | MUST include a recovery action |
+| Success | quiet confirmation (toast or inline text) | MUST NOT block the user |
+
+Template for a component or screen:
+
+| Component / screen | Default | Hover | Active | Focus-visible | Disabled | Loading | Empty | Error | Success |
+|---|---|---|---|---|---|---|---|---|---|
+| _name_ | | | | | | | | | |
+
+## 15. Microcopy
+
+- Buttons MUST be verb + object: "Delete project", "Copy error address". MUST NOT use "OK", "Submit" or "Click here".
+- Errors MUST say what happened, why, and what to do next. Errors MUST NOT blame the user ("You entered…", "Invalid input").
+- Empty states MUST explain what belongs there and give one action.
+- Mockups, screenshots and seed data MUST use real names, real numbers and real data from this product. MUST NOT use "John Doe", "Acme", lorem ipsum, invented statistics or fake testimonials.
+- MUST keep the one-term-per-thing list from §6.
+
+## 16. Writing style
+
+- MUST state the point directly in plain, specific sentences.
+- MUST NOT use "it's not X, it's Y" or any variant: "not just X but Y", "not only X but also Y", "no X, no Y, just Z", "less X, more Y", "stop X, start Y".
+- MUST NOT use these words: seamless, delve, elevate, unlock, leverage, empower, game-changer, revolutionize.
+- MUST NOT write a list of three by habit. A list MUST have as many items as there are real items.
+- Destructive confirmations MUST name what is lost ("Delete app? This forgets its token and clone.").
+
+## 17. Motion
+
+- Every animation MUST answer a user question: did the click register, is it loading, is this hoverable.
+- MUST remove any animation that answers none of these.
+- Duration MUST be 150ms for feedback and the shadcn defaults for dialogs and the drawer.
+- MUST respect `prefers-reduced-motion`.
+- MUST NOT use parallax, looping decoration, or entrance animations on page load.
+
+## 18. Accessibility
+
+- MUST use semantic HTML: `button` for actions, `a` for navigation, headings in order, `table` for tabular data.
+- Every input MUST have a visible label. Placeholders MUST NOT replace labels.
+- Every action MUST work from the keyboard, in a logical tab order.
+- Focus MUST be visible (§14).
+- Field errors MUST be tied to the field with `aria-describedby` and `aria-invalid`. Focus MUST move to the first invalid field.
+- Color MUST NOT be the only signal. Pair it with an icon and a word.
+- Every screen MUST be checked at 360px width with no horizontal page scroll.
+- Everything else in §5 still applies.
+
+## 19. Banned list
+
+| Category | Banned |
+|---|---|
+| Fonts (as primary) | Inter, Roboto, Arial, Open Sans, Lato, system default, Space Grotesk, Geist |
+| Type | any size outside §10, arbitrary `text-[…]` values |
+| Color | purple, indigo or blue gradients, any gradient, gradient text, neon glow, color as the only signal |
+| Layout | centered hero with three equal cards and icons, wall of identical cards, card around everything, arbitrary spacing values |
+| Shape | more than 3 radii, more than 2 shadows, pills (Part 1) |
+| Icons | emoji as icons, a second icon set |
+| Copy | "OK", "Submit", "Click here", blaming errors, placeholders (John Doe, Acme, lorem ipsum), invented stats, fake testimonials |
+| Phrases | "it's not X, it's Y" and variants (not just X but Y, not only X but also Y, no X no Y just Z, less X more Y, stop X start Y) |
+| Words | seamless, delve, elevate, unlock, leverage, empower, game-changer, revolutionize |
+| Motion | animation that answers no user question, parallax, load-in animations |
+
+## 20. Pre-ship checklist
+
+Every answer MUST be yes before merge.
+
+1. Do all fonts come from §10, with no banned primary font?
+2. Does every text size come from the scale?
+3. Does the screen use only the six named colors, and no gradient?
+4. Does every text and icon pair meet WCAG AA?
+5. Does the screen use only spacing tokens and the 8px grid?
+6. Are there at most 3 radii and 2 shadows?
+7. Is there exactly one primary action on the screen?
+8. Is the layout built around the user's core task, with no wall of identical cards?
+9. Is the state matrix (§14) filled in for every new component and data screen?
+10. Is every button verb + object, and does every error say what to do next?
+11. Does every mockup and seed record use real data?
+12. Is the copy free of banned phrases and words?
+13. Does every animation answer a user question?
+14. Can the whole screen be used by keyboard, with labels, visible focus and field-linked errors?
+15. Does it work at 360px width and match the other screens in layout, spacing and wording?
+
+## 21. Decisions
+
+Decided from the design-system and accessibility-review passes. Change any of them by editing this table.
+
+| # | Question | Decision | Why |
+|---|---|---|---|
+| 1 | Reference sites | Vercel (dense, quiet, data first) and Linear (sorted lists, keyboard first) | Both are dark, list-driven tools for developers. Vercel is already named in Part 1. |
+| 2 | Fonts | Bricolage Grotesque (display), IBM Plex Sans (body), Geist Mono (mono) | None are banned. Plex Sans is legible at 12 to 14px in dense tables. |
+| 3 | Project card grid | Replace with a list sorted by needs attention, one row per project | Matches the core task and removes the wall of identical cards. |
+| 4 | Type scale | 1.200 from 14px: 12 / 14 / 17 / 20 / 24 / 29 | Small steps suit a dense tool. 13 becomes 12 or 14, 16 becomes 17, 28 becomes 29. |
+| 5 | `crashed` color | Use `danger` `#e5484d` | It is 4.69:1 on surface. `#d03b3b` is 3.82:1, which passes for icons only. |
+| 6 | 4px inside controls | Allowed (`space-1`) | Icon-to-label gaps need it. |
+| 7 | Product voice | The product owner. The voice is §6 and §15 to §16 | No other source exists. |
+
+## 22. Contrast check
+
+Measured with the WCAG formula on surface `#12141d` and background `#090a12`.
+
+| Pair | On surface | On background | Needs | Result |
+|---|---|---|---|---|
+| `text` `#f7f8fa` | 17.28 | 18.58 | 4.5 | Pass |
+| Secondary `#a3a7b3` | 7.64 | 8.21 | 4.5 | Pass |
+| `primary` `#e8eaf0` | 15.27 | 16.41 | 4.5 | Pass |
+| `accent` `#2589fe` | 5.32 | 5.72 | 3 (graphic) | Pass |
+| `danger` `#e5484d` | 4.69 | 5.04 | 4.5 | Pass |
+| Old `crashed` `#d03b3b` | 3.82 | 4.11 | 3 (icon) | Pass for icons, fails for text |
+| `running` `#0ca30c` | 5.47 | 5.88 | 3 (icon) | Pass |
+| `stopped` `#898781` | 5.11 | 5.50 | 3 (icon) | Pass |
+| Field border `#6d7182` | 3.79 | 4.07 | 3 | Pass |
+
+- Text on a primary button MUST be `#090a12` (16.41:1).
+- Text on a destructive button MUST be `#090a12` (5.04:1). White text is 3.91:1 and fails.
