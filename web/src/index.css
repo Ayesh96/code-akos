@@ -37,7 +37,7 @@
   /* Status colors are for icons only; text stays in normal ink */
   --status-running: #0ca30c;
   --status-stopped: #898781;
-  --status-crashed: #d03b3b;
+  --status-crashed: #e5484d; /* same red as --destructive */
 }
 
 @theme inline {

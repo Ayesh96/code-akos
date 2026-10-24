@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Overview } from '@/components/projects/Overview';
 import { AddProjectDialog } from '@/components/projects/AddProjectDialog';
 import { ConnectDialog } from '@/components/projects/ConnectDialog';
-import { ProjectCard } from '@/components/projects/ProjectCard';
+import { ProjectRow } from '@/components/projects/ProjectRow';
 import { ProjectPage } from '@/components/projects/ProjectPage';
 import { ProjectSettingsDialog } from '@/components/projects/ProjectSettingsDialog';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -17,12 +17,13 @@ import { useResolverAttempts } from '@/hooks/useResolverAttempts';
 import { LIST_HREF, useProjectRoute } from '@/hooks/useProjectRoute';
 import { useProjects } from '@/hooks/useProjects';
 import { api, type ProjectView } from '@/lib/api';
+import { byAttention } from '@/lib/attention';
 import { copy } from '@/lib/copy';
 
 const c = copy.projects;
 const message = (err: unknown) => (err instanceof Error ? err.message : String(err));
 
-/** The Projects tab: one card per repository, with its clone status, its errors' pipeline and the latest errors inside it. */
+/** The Projects tab: one row per repository, most in need of attention first, with its clone status and its errors' pipeline. */
 export function ProjectsPanel() {
   const { data, error, announcement, refresh } = useProjects();
   const { groups, status: tracker, refresh: refreshErrors } = useErrorGroups();
@@ -120,24 +121,13 @@ export function ProjectsPanel() {
       )}
 
       {routeId === null && projects && projects.length > 0 && (
-        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              group={groups?.find((g) => g.projectId === project.id)}
-              {...actionsFor(project)}
-            />
-          ))}
-          <button
-            type="button"
-            onClick={() => setAdding(true)}
-            className="flex min-h-40 flex-col items-center justify-center gap-2 rounded-xl border border-dashed text-sm text-muted-foreground outline-none transition-colors duration-150 hover:bg-accent/40 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
-          >
-            <Plus className="size-5" aria-hidden />
-            {c.add}
-          </button>
-        </div>
+        <Card className="gap-0 py-0">
+          <ul className="divide-y">
+            {byAttention(projects, groups).map((project) => (
+              <ProjectRow key={project.id} project={project} group={groups?.find((g) => g.projectId === project.id)} {...actionsFor(project)} />
+            ))}
+          </ul>
+        </Card>
       )}
 
       {routeId === null && data?.ingest && projects && projects.length > 0 && <p className="text-sm text-muted-foreground">{c.dsnHelp}</p>}

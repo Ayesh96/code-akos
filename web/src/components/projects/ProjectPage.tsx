@@ -4,7 +4,7 @@ import { ExternalLink } from '@/components/Bits';
 import { ErrorList } from '@/components/errors/ErrorList';
 import { Pipeline } from '@/components/Pipeline';
 import { ConnectionButton, ConnectionNote, RefusalNote } from '@/components/projects/ConnectionStatus';
-import { SetupLabel } from '@/components/projects/ProjectCard';
+import { SetupLabel } from '@/components/projects/ProjectRow';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { LIST_HREF } from '@/hooks/useProjectRoute';

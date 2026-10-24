@@ -24,14 +24,14 @@ The base is shadcn's `neutral` dark theme, shifted toward the app icon: its navy
 | `--foreground` | `#f7f8fa` | primary text (the icon's white) |
 | `--muted-foreground` | `#a3a7b3` | secondary text, labels |
 | `--primary` | `#e8eaf0` on `#12141d` | primary buttons (white-on-dark, Vercel style) |
-| `--destructive` | `#e5484d` | delete only |
+| `--destructive` | `#e5484d` | delete only; button text is `--background` (5.0:1, white is 3.9:1) |
 | `--ring` | `#d3d6de` | focus ring; shadcn draws it at 50% alpha = 4.0:1 effective on card |
 | `--radius` | `0.5rem` | cards 8px, controls 6px |
 | `--chart-1` | `#2589fe` | pipeline bars, in-progress icon (the icon's blue; 5.3:1 on card) |
 | `--chart-muted` | `#898781` | muted chart ink |
 | `--status-running` | `#0ca30c` | icon only |
 | `--status-stopped` | `#898781` | icon only |
-| `--status-crashed` | `#d03b3b` | icon only |
+| `--status-crashed` | `#e5484d` | icon only (same red as `--destructive`) |
 
 Type: **IBM Plex Sans** for UI, **Bricolage Grotesque** for headings and big counts, **Geist Mono** for paths/commands/logs (self-hosted via `@fontsource-variable`, works offline). Scale: 12 / 14 / 17 / 20 / 24 / 29 (§10). Big standalone numbers use proportional figures; `tabular-nums` only in table columns.
 Spacing: Tailwind 4px scale; page gutter 16 (mobile) / 24; max width 1152px.
@@ -41,10 +41,10 @@ Motion: 150ms ease-out for hover/focus; sheet/dialog use shadcn's enter/exit; ev
 
 | Pattern | Where | Why |
 |---|---|---|
-| **Full-width canvas** | `App.tsx` | Content spans the screen (cap 2000px, 16/32px gutters) instead of a centred 1152px column. Cards go 1 → 2 → 3 columns at `md` / `2xl`. |
-| **Project card** | `ProjectCard.tsx` | The unit of the product, laid out the same way every time so a row of cards reads as a grid. Header: repo (links to its page) and actions on the left and right, then branch; the clone status appears only when it needs attention (Cloning, Failed, Not cloned yet), never as "Ready" on a card. The project page lists it, Ready included, under "How it is set up". Body: the pipeline as large counts. Footer: two equal buttons (setup guide, copy error address), then three equal columns of facts (connection, token, fix check). |
+| **Full-width canvas** | `App.tsx` | Content spans the screen (cap 2000px, 16/32px gutters) instead of a centred 1152px column. |
+| **Project list** | `ProjectsPanel.tsx`, `ProjectRow.tsx`, `lib/attention.ts` | One bordered list, one row per project, ordered by what needs attention (failed clone, then most errors without a pull request, then name). Row: repo (links to its page), branch and clone status (shown only when it needs attention); the pipeline as five counts; settings and delete. Second line: connection status, error totals, then Connect / Copy error address / View errors. Token and fix check are on the project page, under "How it is set up". |
 | **Overview strip** | `Overview.tsx` | Above the cards: tracker health, resolver last poll (and poll error), and the pipeline summed across projects. |
-| **Counts on the card, errors on the page** | `ProjectCard.tsx`, `ProjectPage.tsx` | A card shows only numbers: the project's pipeline (Tracked → Triaged → Filed → Fix tried → PR Open) as big counts with bars and "% of tracked", a one-line total, and a "View errors" button. It never grows with the number of errors. The errors themselves live on the project's own page at `#/projects/<id>`: back link, header with actions, the full-size pipeline, **every error** (search, state filter, 25 at a time) and how the project is set up. |
+| **Counts on the row, errors on the page** | `ProjectRow.tsx`, `ProjectPage.tsx` | A row shows only numbers: the project's pipeline (Tracked → Triaged → Filed → Fix tried → PR Open) as big counts with bars and "% of tracked", a one-line total, and a "View errors" button. It never grows with the number of errors. The errors themselves live on the project's own page at `#/projects/<id>`: back link, header with actions, the full-size pipeline, **every error** (search, state filter, 25 at a time) and how the project is set up. |
 | **Hash routing** | `hooks/useProjectRoute.ts` | `#/projects/<id>` opens a project, anything else is the list. No router library or server support; it survives a reload and the back button works. A new page scrolls to the top and moves focus to its title. |
 | **Connection status** | `ConnectionStatus.tsx`, `lib/connection.ts` | On each card and project page, in the place the "Connect an app" button used to be: a plain line of text (icon and words) and a guide button. **Connected** means an event has actually arrived (not a setting): "App connected · last event 3m ago", the reporting apps (by their `service` tag) on hover and in the summary line, and a "Setup guide" button that reopens the connect dialog to add another app. Before the first event the same spot reads "No app connected yet" with the "Connect an app" button. State is icon and words, never colour alone. |
 | **Connect guide** | `ConnectDialog.tsx`, `lib/snippets.ts` | A "Connect an app" button on each card (and in its empty state) opens a four-step guide: the project's error address, install, init, send a test. Tabs for Python, Node.js and Browser (TypeScript and JavaScript share the code); the snippets are filled in with the project's own address and a service name taken from its repo. A table explains each recommended setting. The test sends an `info` message, so it shows on the card and is read as a test without opening a GitHub issue. |
@@ -320,7 +320,7 @@ Decided from the design-system and accessibility-review passes. Change any of th
 |---|---|---|---|
 | 1 | Reference sites | Vercel (dense, quiet, data first) and Linear (sorted lists, keyboard first) | Both are dark, list-driven tools for developers. Vercel is already named in Part 1. |
 | 2 | Fonts | Bricolage Grotesque (display), IBM Plex Sans (body), Geist Mono (mono) | None are banned. Plex Sans is legible at 12 to 14px in dense tables. |
-| 3 | Project card grid | Replace with a list sorted by needs attention, one row per project | Matches the core task and removes the wall of identical cards. |
+| 3 | Project card grid | Replaced with a list sorted by needs attention, one row per project (done) | Matches the core task and removes the wall of identical cards. |
 | 4 | Type scale | 1.200 from 14px: 12 / 14 / 17 / 20 / 24 / 29 | Small steps suit a dense tool. 13 becomes 12 or 14, 16 becomes 17, 28 becomes 29. |
 | 5 | `crashed` color | Use `danger` `#e5484d` | It is 4.69:1 on surface. `#d03b3b` is 3.82:1, which passes for icons only. |
 | 6 | 4px inside controls | Allowed (`space-1`) | Icon-to-label gaps need it. |
