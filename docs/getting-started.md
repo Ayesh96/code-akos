@@ -45,9 +45,9 @@ Code Akos checks the token with GitHub before saving it, stores it encrypted on 
 
 ## 3. Connect your app
 
-Click **Setup guide** on the project's card. The guide shows the code for Python, Node.js and the browser, with your project's DSN already filled in. It looks like `http://codeakos@localhost:3000/1`, where the number at the end is the project's ID.
+Click **Setup guide** on the project's row. The guide shows the code for Python, Node.js and the browser, with your project's DSN already filled in. It looks like `http://codeakos@localhost:3000/1`, where the number at the end is the project's ID.
 
-![Code Akos's connect guide for Python: install sentry-sdk, initialise it with the project DSN, and send a test message](assets/screenshots/10-setup-guide.png){ loading=lazy width="2880" height="1800" }
+![Code Akos's Setup guide for Python: install sentry-sdk, initialise it with the project DSN, and send a test message](assets/screenshots/10-setup-guide.png){ loading=lazy width="2880" height="1800" }
 
 If your app already uses Sentry, you only need to replace the `dsn` value. Otherwise, install the SDK and add the setup code where your app starts.
 
@@ -169,7 +169,7 @@ Send one message to check the connection:
     await Sentry.flush(2000); // send now rather than at exit
     ```
 
-Within a few seconds, the project's card shows **App connected** and the message appears in its error list. Triage recognises it as a test (tag `test-event`), so it is not filed on GitHub.
+Within a few seconds, the project's row shows **App connected** and the message appears in its error list. Triage recognises it as a test (tag `test-event`), so it is not filed on GitHub.
 
 If nothing arrives, check that Code Akos is running, that the DSN matches the one in the setup guide exactly, and that your app can reach the ingest port. Running `curl http://localhost:3000/healthz` on the Code Akos computer should print `{"status":"ok"}`.
 

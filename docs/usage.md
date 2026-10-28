@@ -23,15 +23,15 @@ An error can stop early on purpose. A warning or an error without a stack trace 
 
 ## Projects overview
 
-![Code Akos projects overview: totals for the five stages and a card for each project](assets/screenshots/05-dashboard-overview.png){ loading=lazy width="2880" height="1800" }
+![Code Akos projects overview: totals for the five stages and a row for each project](assets/screenshots/05-dashboard-overview.png){ loading=lazy width="2880" height="1800" }
 
 The **Projects** page is the first thing you see.
 
 - **Tracker running** confirms that Code Akos is accepting errors, with the number received and when the last one arrived.
 - **Run resolver now** starts a round of fixes immediately instead of waiting for the next scheduled check (every 5 minutes by default). Next to it is the time of the last check.
 - The **totals row** adds up the five stages across all projects.
-- Each **project card** shows its repository and branch, its own five stages, which apps report to it (the `service` tag) and when it last heard from them. **View errors** opens the project page.
-- At the bottom of a card, **Setup guide** shows the SDK code for connecting an app, and **Copy error address** copies the project's DSN. **Connection** turns green once an app has reported, **Token** shows the last four characters of the saved GitHub token, and **Fix check** shows the command run before and after each fix.
+- Each **project row** shows its repository and branch, its own five stages, whether an app is connected and when the last event arrived, and how many errors and events it has. **View errors** opens the project page.
+- On the right of each row, **Setup guide** shows the SDK code for connecting an app, and **Copy error address** copies the project's DSN.
 - The gear icon opens the project's settings, and the bin icon deletes it.
 
 ## A project's errors
@@ -56,7 +56,7 @@ Use the **search box** to find errors by title, app or triage text. The **state 
 | PR open | Errors with a pull request waiting for you |
 | Skipped or failed | Errors the resolver skipped or could not fix |
 
-Below the list, **How it is set up** shows the project's repository copy, token, fix check and whether errors without a stack trace are filed on GitHub.
+Below the list, **How it is set up** shows the project's repository copy, its token (the last four characters), the fix check (the command run before and after each fix), the apps reporting to it (their `service` tag), its error address, and whether errors without a stack trace are filed on GitHub.
 
 ## Error details
 
@@ -92,7 +92,7 @@ If you disagree, click **Try again anyway** to run the resolver on it once more.
 
 ## Project settings
 
-Open a project's settings with the gear icon on its card, or with **Project settings** on its page. You can change:
+Open a project's settings with the gear icon on its row, or with **Project settings** on its page. You can change:
 
 - **Branch to work on.** Changing it fetches the new branch. New fixes start from it.
 - **GitHub token.** Leave it empty to keep the saved one. A new token is checked with GitHub before it is saved.

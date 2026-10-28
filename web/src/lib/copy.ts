@@ -234,7 +234,7 @@ export const copy = {
       node: 'Run it before the rest of your app (in ES modules, with node --import ./instrument.mjs). Unhandled exceptions and rejections are then reported on their own.',
       browser: 'Run it once when the page loads. Browsers on another device cannot reach a loopback-only listener; see the note above.',
     },
-    testNote: 'Sends one info message. It shows up on this project\'s card within a few seconds, is read by triage as a test, and is not filed on GitHub.',
+    testNote: 'Sends one info message. It shows up on this project\'s row within a few seconds, is read by triage as a test, and is not filed on GitHub.',
     settingsTitle: 'What the settings do',
     typescriptNote: 'TypeScript and JavaScript use the same code. The SDK ships its own types, so there is nothing extra to install.',
   },

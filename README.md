@@ -39,8 +39,8 @@ On first launch a four-step setup asks for the dashboard port and data folder, a
 ## First project
 
 1. **Projects → Add project**: `owner/name`, a GitHub token, the branch to work on, and optionally a check command such as `npm ci && npm test`.
-2. Set your SDK's `dsn` to the project's DSN, for example `http://codeakos@localhost:3000/1`. The project's connect guide shows the code for Python, Node.js and the browser.
-3. Errors appear on the project's page (**View errors** on its card). Those with a stack trace are filed as GitHub issues.
+2. Set your SDK's `dsn` to the project's DSN, for example `http://codeakos@localhost:3000/1`. The project's **Setup guide** shows the code for Python, Node.js and the browser.
+3. Errors appear on the project's page (**View errors** on its row). Those with a stack trace are filed as GitHub issues.
 
 The desktop builds for Windows, Linux and Intel Macs are not tested yet; the Apple Silicon build is. On a headless server, see [running from source](docs/reference.md#running-from-source).
 
