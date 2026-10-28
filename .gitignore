@@ -6,6 +6,8 @@ release
 site/
 # Launch drafts and other notes that stay on this machine
 docs/internal/
+# The script that makes the demo screenshots and videos; the files it makes in docs/assets are kept
+scripts/demo/
 
 .DS_Store
 __pycache__/
