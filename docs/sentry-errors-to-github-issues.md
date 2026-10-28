@@ -13,7 +13,7 @@ If your team already works from GitHub issues, errors belong there too. Code Ako
 2. Click **Add project** and enter the repository (`owner/name`), a GitHub token and the branch to work on. Code Akos checks the token and the repository with GitHub before saving.
 3. Set your SDK's `dsn` to the project's address, for example `http://codeakos@localhost:3000/1`. The number at the end is the project ID.
 
-The [getting started guide](getting-started.md) shows each step with screenshots and code for Python, Node.js and the browser.
+The [getting started guide](getting-started.md) walks through each step, with screenshots of the main screens and code for Python, Node.js and the browser.
 
 ## Token permissions
 

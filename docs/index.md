@@ -59,7 +59,7 @@ Sentry can automate part of it, but its AI fixes (Seer) are a paid add-on, and r
 
     **A skipped fix, explained.** The bad date comes from the orders API, so guarding the formatter would only hide the problem.
 
--   ![Connect guide with Sentry SDK setup code for Python, already filled in for the project](assets/screenshots/10-setup-guide.png){ loading=lazy width="2880" height="1800" }
+-   ![Setup guide with Sentry SDK setup code for Python, already filled in for the project](assets/screenshots/10-setup-guide.png){ loading=lazy width="2880" height="1800" }
 
     **Connecting an app.** Copy-ready setup code for Python, Node.js and the browser, with your project's DSN filled in.
 
