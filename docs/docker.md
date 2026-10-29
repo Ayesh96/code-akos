@@ -1,6 +1,11 @@
+---
+title: "Run Code Akos in Docker: Sentry-compatible tracker"
+description: "Run Code Akos in Docker beside your apps: a Compose service, one volume, upgrade steps and the security settings for a self-hosted Sentry-compatible error tracker."
+---
+
 # Running Code Akos in Docker
 
-If your apps already run in Docker, you can run Code Akos beside them. Your apps report errors to it by service name, for example `http://key@code-akos:3000/1`.
+If your apps already run in Docker, you can run Code Akos beside them. Your apps report errors to it by service name, for example `http://key@code-akos:3000/1`. It is the same single-process, SQLite-based [self-hosted error tracker](self-hosted-error-tracking.md) as the desktop app, so there is no database or queue to add.
 
 ## Run it
 
