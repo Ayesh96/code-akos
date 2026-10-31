@@ -36,7 +36,7 @@
   <meta property="og:image" content="{{ ff_image }}">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
-  <meta property="og:image:alt" content="Code Akos: self-hosted, Sentry-compatible error tracking that opens fix pull requests">
+  <meta property="og:image:alt" content="Code Akos: self hosted error tracking for Sentry SDKs that opens fix pull requests">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ ff_og_title }}">
   <meta name="twitter:description" content="{{ ff_description }}">
@@ -51,14 +51,14 @@
       {
         "@type": "SoftwareApplication",
         "name": "Code Akos",
-        "description": "Self-hosted, Sentry-compatible error tracking. It groups errors from Sentry SDKs, files a GitHub issue for each new one and has an LLM (Ollama, DeepSeek or Anthropic) open fix pull requests.",
+        "description": "Self hosted error tracking for Sentry SDKs. It groups errors, files a GitHub issue for each new one and has a model (Ollama, DeepSeek or Anthropic) open fix pull requests for you to review.",
         "url": "{{ config.site_url }}",
         "applicationCategory": "DeveloperApplication",
         "applicationSubCategory": "Error tracking",
         "operatingSystem": "macOS, Windows, Linux",
         "downloadUrl": "{{ config.repo_url }}/releases/latest",
         "installUrl": "{{ config.site_url }}installation/",
-        "screenshot": "{{ config.site_url }}assets/screenshots/05-dashboard-overview.png",
+        "screenshot": "{{ config.site_url }}assets/dashboard/error-list.png",
         "image": "{{ ff_image }}",
         "license": "{{ config.repo_url }}/blob/main/LICENSE",
         "isAccessibleForFree": true,

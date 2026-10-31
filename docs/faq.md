@@ -10,11 +10,11 @@ faq: true
 
 ### What is Code Akos?
 
-Code Akos is a self-hosted error tracker that works with Sentry SDKs. It receives the errors your app reports, groups repeats, opens a GitHub issue for each new one and has an AI model attempt a fix, which it opens as a pull request for you to review. It runs as a desktop app on macOS, Windows and Linux, or as a single Node.js process on a server.
+Code Akos is a self hosted error tracker that works with Sentry SDKs. It receives the errors your app reports, groups repeats, opens a GitHub issue for each new one and has an AI model attempt a fix, which it opens as a pull request for you to review. It runs as a desktop app on macOS, Windows and Linux, or as a single Node.js process on a server.
 
 ### Is Code Akos a replacement for Sentry?
 
-For error tracking, yes. Code Akos accepts events from Sentry SDKs, so switching only means changing the DSN in your app. It does not replace the rest of Sentry: there is no performance tracing, session replay, alerting or team accounts. See the [comparison of Sentry alternatives](sentry-alternative.md).
+For basic error tracking, yes. Code Akos accepts events from Sentry SDKs, so switching means changing the DSN in your app. It does not replace the rest of Sentry: there is no performance tracing, session replay, alerting or team accounts. See the [comparison of Sentry alternatives](sentry-alternative.md).
 
 ### Do I need to change my code?
 
@@ -22,7 +22,7 @@ Only the `dsn` setting in your Sentry SDK setup. If your app does not use Sentry
 
 ### Which languages and SDKs are supported?
 
-Code Akos implements Sentry's standard `store` and `envelope` endpoints, which all official Sentry SDKs use. The Python SDK has been tested end to end. The dashboard's setup guide includes ready-made code for Python, Node.js and the browser. Other SDKs, such as those for Go, Ruby or PHP, use the same endpoints and are expected to work but have not been tested yet.
+Code Akos implements Sentry's standard `store` and `envelope` endpoints, which all official Sentry SDKs use. The Python SDK has been tested end to end. The dashboard's setup guide includes ready made code for Python, Node.js and the browser. Other SDKs, such as those for Go, Ruby or PHP, use the same endpoints and are expected to work but have not been tested yet.
 
 ### Does Code Akos work with GitLab or Bitbucket?
 
@@ -32,15 +32,15 @@ No. Code Akos files issues and opens pull requests on GitHub only. GitHub Enterp
 
 ### Is Code Akos free?
 
-Yes. Code Akos is free to download, use and self-host, including at work. If you choose DeepSeek or Anthropic as the model, you pay those providers for what you use. With Ollama, the model runs on your computer at no cost.
+Yes. Code Akos is free to download, use and self host, including at work. If you choose DeepSeek or Anthropic as the model, you pay those providers for what you use. With Ollama, the model runs on your computer at no cost.
 
 ### Is Code Akos open source?
 
-Code Akos is source-available under the Functional Source License (FSL-1.1-ALv2). You can read, change and self-host the code freely; the one restriction is that you cannot use it to offer a competing commercial product. Each release automatically becomes Apache 2.0 licensed, a standard open source license, two years after it is published.
+Code Akos is source available under the Functional Source License (FSL-1.1-ALv2). You can read, change and self host the code freely; the one restriction is that you cannot use it to offer a competing commercial product. Each release automatically becomes Apache 2.0 licensed, a standard open source license, two years after it is published.
 
 ### How much do AI fixes cost with a paid API?
 
-Each fix attempt uses at most 20 model calls, and an issue that keeps failing is tried at most 3 times before Code Akos stops on its own. Skipped attempts and successful fixes also use calls. The default hosted models, `deepseek-flash` and `claude-haiku-4-5`, are low-cost models chosen for this kind of short task. To pay nothing, use Ollama.
+Each fix attempt uses at most 20 model calls, and an issue that keeps failing is tried at most 3 times before Code Akos stops on its own. Skipped attempts and successful fixes also use calls. The default hosted models, `deepseek-flash` and `claude-haiku-4-5`, are low cost models chosen for this kind of short task. To pay nothing, use Ollama.
 
 ## Privacy and security
 
@@ -58,13 +58,13 @@ No. Code Akos pushes each fix to its own branch, `code-akos/issue-<number>`, and
 
 ### Can the model run commands on my computer?
 
-No. The model can only read files, list folders, search the code and edit files in a temporary copy of your repository. The only command Code Akos runs is the check command you set for the project, such as `npm test`.
+The model has no command tool. It can read files, list folders, search the code and edit files in a temporary copy of your repository. But Code Akos runs your check command after the model has edited the code, and that command is not sandboxed. It runs through `sh -c` with your user's permissions and the environment of the Code Akos process, which includes your model API keys. Set a check command you trust, such as `npm test`. With no check command, nothing runs and the pull request is marked unverified.
 
 ## AI fixes
 
 ### How is Code Akos different from Sentry Seer?
 
-Both find the cause of an error and can open a fix as a pull request. Seer runs in Sentry's cloud and is a paid add-on. Code Akos runs on your own computer, works with a model you choose, including a free local one, and also runs your tests before and after each change. See [Code Akos resolver vs Sentry Seer](ai-bug-fix-pull-requests.md#code-akos-resolver-vs-sentry-seer).
+Both find the cause of an error and can open a fix as a pull request. Seer runs in Sentry's cloud and is a paid extra. Code Akos runs on your own computer, works with a model you choose, including a free local one, and also runs your tests before and after each change. See [Code Akos resolver vs Sentry Seer](ai-bug-fix-pull-requests.md#code-akos-resolver-vs-sentry-seer).
 
 ### How good are the fixes?
 

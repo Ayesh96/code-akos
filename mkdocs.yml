@@ -1,5 +1,5 @@
 site_name: Code Akos
-site_description: Code Akos is free, self-hosted error tracking for Sentry SDKs. It groups errors, files GitHub issues and has a local or hosted LLM open fix pull requests.
+site_description: Code Akos is free, source available error tracking for Sentry SDKs. It runs on your own computer, files GitHub issues and has a model open fix pull requests for you to review.
 site_url: https://ayesh96.github.io/code-akos/
 repo_url: https://github.com/Ayesh96/code-akos
 repo_name: Ayesh96/code-akos
@@ -77,7 +77,7 @@ nav:
       - Running in Docker: docker.md
   - Guides:
       - Sentry alternatives compared: sentry-alternative.md
-      - Self-hosted error tracking: self-hosted-error-tracking.md
+      - Self hosted error tracking: self-hosted-error-tracking.md
       - Sentry errors to GitHub issues: sentry-errors-to-github-issues.md
       - AI bug fixes as pull requests: ai-bug-fix-pull-requests.md
       - Error triage with Ollama: local-llm-error-triage.md

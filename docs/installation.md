@@ -1,6 +1,6 @@
 ---
 title: "Install Code Akos on macOS, Windows and Linux"
-description: "How to download and install Code Akos, the self-hosted Sentry alternative: first launch on each system, choosing a model, and the four-step setup."
+description: "How to download and install Code Akos, the self hosted Sentry alternative: first launch on each system, choosing a model, and the four step setup."
 ---
 
 # Installation
@@ -13,7 +13,7 @@ Code Akos is a desktop app for macOS, Windows and Linux. It includes everything 
 - **[git](https://git-scm.com/downloads).** Code Akos uses it to copy your repository and prepare fixes. On a Mac, running `git --version` in Terminal offers to install it if it is missing.
 - **A GitHub repository** for the app you want to monitor, and permission to create a token for it.
 - **A model** to read errors and write fixes. You can use either of these:
-    - [Ollama](https://ollama.com), which runs a model on your own computer. Nothing is sent to anyone else, and there is no per-use cost.
+    - [Ollama](https://ollama.com), which runs a model on your own computer. Nothing is sent to anyone else, and there is no per use cost.
     - An API key from [DeepSeek](https://platform.deepseek.com) or [Anthropic](https://console.anthropic.com). These usually give better fixes, but error details and parts of your source code are sent to that provider, and each call is billed.
 
 ## Download

@@ -7,7 +7,7 @@ description: "How Code Akos turns production errors into AI fix pull requests wi
 
 Code Akos's **resolver** reads each GitHub issue Code Akos filed, asks an AI model to fix the bug in a temporary copy of your repository, runs your tests, and opens the change as a pull request. You review it and decide whether to merge. Code Akos never merges anything itself.
 
-It does a similar job to Sentry's Seer, but it runs on your own computer, works with a model you choose (including a free local model through [Ollama](https://ollama.com)) and has no per-seat price.
+It does a similar job to Sentry's Seer, but it runs on your own computer, works with a model you choose (including a free local model through [Ollama](https://ollama.com)) and has no per seat price.
 
 ## Which issues it works on
 
@@ -46,7 +46,7 @@ The instructions given to the model ask it to change only a few lines in one or 
 A good fixer knows when not to touch the code. The model is told to make no change unless it can pinpoint the cause in your own code and fix it in a few lines. So the resolver skips an issue when:
 
 - the cause is outside your code, for example another service sending bad data, a database being down or a missing secret;
-- the stack trace points into a third-party library rather than your code;
+- the stack trace points into a third party library rather than your code;
 - the model cannot tell what the right fix is;
 - your tests were already failing before any change.
 
@@ -62,11 +62,11 @@ The resolver tries the providers you set up, in order, and moves to the next one
 | DeepSeek | Paid per call | The issue and source files are sent to DeepSeek | `deepseek-flash` |
 | Anthropic | Paid per call | The issue and source files are sent to Anthropic | `claude-haiku-4-5` |
 
-Hosted models are generally stronger at code than a 7-billion-parameter local model. A local model is a good way to start, since it costs nothing to try, and you can add a hosted one later in Settings. The [configuration reference](reference.md#configuration) lists every model setting.
+Hosted models are generally stronger at code than a 7 billion parameter local model. A local model is a good way to start, since it costs nothing to try, and you can add a hosted one later in Settings. The [configuration reference](reference.md#configuration) lists every model setting.
 
 ## Cost and risk
 
-- **API cost.** With DeepSeek or Anthropic, every turn is a paid call: up to 20 per attempt and 3 failed attempts per issue. Skipped attempts and successful fixes also cost the turns they used. With Ollama there is no per-call cost.
+- **API cost.** With DeepSeek or Anthropic, every turn is a paid call: up to 20 per attempt and 3 failed attempts per issue. Skipped attempts and successful fixes also cost the turns they used. With Ollama there is no per call cost.
 - **Your check command runs on your computer.** It runs as your user, in the temporary copy, and it runs code from the branch, including the model's change. Only use a command you would run yourself.
 - **Fix quality is not measured yet.** How often the fixes are correct has not been measured. Review every pull request as carefully as one from a new contributor.
 
