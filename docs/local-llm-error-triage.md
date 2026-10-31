@@ -22,13 +22,13 @@ You can run triage entirely on your own computer with [Ollama](https://ollama.co
 
     3. In Code Akos's setup (or **Settings**), switch on **Ollama**, click **Test connection** and pick the model.
 
-    Qwen2.5-Coder 7B is a code-focused model that runs on a typical developer laptop. Any model you have pulled in Ollama appears in the list, so you can choose a larger or smaller one.
+    Qwen2.5-Coder 7B is a code focused model that runs on a typical developer laptop. Any model you have pulled in Ollama appears in the list, so you can choose a larger or smaller one.
 
 === "DeepSeek or Anthropic (hosted)"
 
     Switch on the provider in Code Akos's setup and paste an API key. The defaults are `deepseek-flash` and `claude-haiku-4-5`, both fast and inexpensive. Error details are sent to the provider (see [what the model sees](#what-the-model-sees)).
 
-With more than one provider set up, Code Akos uses them in order and falls back to the next if a call fails. With **no** provider set up, Code Akos uses built-in rules instead, which recognise common mistakes by their message. If providers are set up but all of them fail, the error is marked **Couldn't triage** rather than silently handed to the rules, and you can click **Triage again** later.
+With more than one provider set up, Code Akos uses them in order and falls back to the next if a call fails. With **no** provider set up, Code Akos uses built in rules instead, which recognise common mistakes by their message. If providers are set up but all of them fail, the error is marked **Couldn't triage** rather than silently handed to the rules, and you can click **Triage again** later.
 
 When running from source, the same choices are made with environment variables: `ORCH_OLLAMA_URL`, `ORCH_OLLAMA_MODEL`, `ORCH_DEEPSEEK_API_KEY`, `ORCH_ANTHROPIC_API_KEY` and `ORCH_TRIAGE_PROVIDERS`. See the [configuration reference](reference.md#configuration).
 
@@ -47,7 +47,7 @@ When running from source, the same choices are made with environment variables: 
 | `no-stack-trace` | There is no stack trace, so there is no culprit line to point at. |
 | `test-event` | A message (not an exception) at `debug`, `info` or `warning` level that contains words like "test" or "please ignore" and no failure words. The connection test in the setup guide is one. |
 
-Without a model, the built-in rules give `bot-safe` to messages that match well-known small mistakes: `Cannot read properties of undefined`, `X is not defined`, `X is not a function`, Python's `NameError`, `'NoneType' object has no attribute`, an unbound local variable, and lint findings.
+Without a model, the built in rules give `bot-safe` to messages that match well known small mistakes: `Cannot read properties of undefined`, `X is not defined`, `X is not a function`, Python's `NameError`, `'NoneType' object has no attribute`, an unbound local variable, and lint findings.
 
 Triage only describes. It does not decide whether an error is filed on GitHub, and the resolver does not currently read the tags; see [which issues are attempted](ai-bug-fix-pull-requests.md#which-issues-it-works-on).
 

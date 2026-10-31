@@ -11,9 +11,9 @@ In Code Akos, a **project** is one GitHub repository and the branch you want fix
 
 ## 1. Create a GitHub token
 
-Code Akos needs a GitHub token to open issues and pull requests on your repository. Use a fine-grained personal access token, which can be limited to one repository:
+Code Akos needs a GitHub token to open issues and pull requests on your repository. Use a fine grained personal access token, which can be limited to one repository:
 
-1. On GitHub, open **Settings › Developer settings › Personal access tokens › Fine-grained tokens** and click **Generate new token**.
+1. On GitHub, open **Settings › Developer settings › Personal access tokens › Fine grained tokens** and click **Generate new token**.
 2. Under **Repository access**, choose **Only select repositories** and pick your repository.
 3. Under **Permissions**, give it the following:
 
@@ -30,7 +30,7 @@ Code Akos needs a GitHub token to open issues and pull requests on your reposito
 
 ## 2. Add the project
 
-![The Add project window in Code Akos, asking for the repository and a GitHub token](assets/screenshots/11-add-project.png){ loading=lazy width="2880" height="1800" }
+![The Add project window in Code Akos, asking for the repository and a GitHub token](assets/dashboard/add-project.png){ loading=lazy width="1152" height="1056" }
 
 In the dashboard, click **Add project**. The window has three steps.
 
@@ -47,7 +47,7 @@ Code Akos checks the token with GitHub before saving it, stores it encrypted on 
 
 Click **Setup guide** on the project's row. The guide shows the code for Python, Node.js and the browser, with your project's DSN already filled in. It looks like `http://codeakos@localhost:3000/1`, where the number at the end is the project's ID.
 
-![Code Akos's Setup guide for Python: install sentry-sdk, initialise it with the project DSN, and send a test message](assets/screenshots/10-setup-guide.png){ loading=lazy width="2880" height="1800" }
+![Code Akos's Setup guide for Python: install sentry-sdk, initialise it with the project DSN, and send a test message](assets/dashboard/setup-guide.png){ loading=lazy width="1536" height="1736" }
 
 If your app already uses Sentry, you only need to replace the `dsn` value. Otherwise, install the SDK and add the setup code where your app starts.
 
@@ -190,7 +190,7 @@ This is what happens next:
 4. **Fix tried.** Within 5 minutes, the resolver picks up the issue. To start it right away, click **Run resolver now** on the Projects page. It runs your check command, lets the model make a small change, and runs the check again.
 5. **PR open.** A pull request titled `Fix: [Error] NameError: …` appears on GitHub. Its description explains the change, lists the files, says whether the check passed and starts with `Closes #<issue>`, so merging it closes the issue.
 
-![An error in Code Akos with an open pull request: what the resolver changed and a link to the pull request](assets/screenshots/08-error-pull-request.png){ loading=lazy width="2880" height="1800" }
+![An error in Code Akos with an open pull request: what the resolver changed and a link to the pull request](assets/dashboard/pull-request.png){ loading=lazy width="888" height="1400" }
 
 Review the pull request like any other: read the diff, run it if needed, and merge it or close it. Code Akos never merges on its own.
 

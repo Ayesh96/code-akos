@@ -15,7 +15,7 @@ A **project** is a repository, the **branch** to work on, and the **GitHub token
 - Tokens are stored **encrypted** (AES-256-GCM) in `projects.db`, never in `.env`, and are never sent to the browser (only the last 4 characters, to tell tokens apart). The key is `secret.key` (mode 0600), beside it.
 - **What that does and does not protect:** a copied database or backup contains no usable token. Someone who can read your user's files can still read the key beside it, so this is the same trust as an SSH private key, not an OS keychain.
 - A project can have a separate token for the resolver (pushing a branch and opening a pull request need more access than filing issues). Without one, the main token is used.
-- Each project's repository is cloned once, when it is added, into `repos/` as a bare, shallow (`--depth 1`), single-branch clone, and fetched before every fix. One clone serves every branch of a repo.
+- Each project's repository is cloned once, when it is added, into `repos/` as a bare, shallow (`--depth 1`), single branch clone, and fetched before every fix. One clone serves every branch of a repo.
 - **The check command** runs through a shell, in a throwaway copy of the repository, before and after each fix. If it already fails before the fix, the resolver skips the issue; if it fails after, the pull request says it is unverified. It runs as you, on your machine, so only put commands there that you would run yourself.
 
 All of it lives in one data folder, `~/.code-akos` by default (`ORCH_DATA_DIR`).
@@ -27,18 +27,18 @@ One process, two sockets, and the split matters:
 | | Dashboard | Error ingest |
 |---|---|---|
 | Default | `127.0.0.1:7420` | `127.0.0.1:3000` |
-| Auth | token cookie + `Host` allow-list + `Origin` check | optional `sentry_key` only |
-| CORS | none (same-origin only) | `*` |
+| Auth | token cookie + `Host` allow list + `Origin` check | optional `sentry_key` only |
+| CORS | none (same origin only) | `*` |
 | Serves | the UI and the API | the two Sentry endpoints and `/healthz`, nothing else |
 
-Sentry SDKs, browsers included, post cross-origin with no cookie, so none of the dashboard's checks can apply to them. Rather than weaken those checks, ingest gets its own socket with nothing else on it. It still binds loopback by default, so only apps on this machine can report until you set `ORCH_ERRORS_INGEST_HOST=0.0.0.0` (which prints a warning at startup). Set `ORCH_ERRORS_DSN_PUBLIC_KEY` to require a key.
+Sentry SDKs, browsers included, post cross origin with no cookie, so none of the dashboard's checks can apply to them. Rather than weaken those checks, ingest gets its own socket with nothing else on it. It still binds loopback by default, so only apps on this machine can report until you set `ORCH_ERRORS_INGEST_HOST=0.0.0.0` (which prints a warning at startup). Set `ORCH_ERRORS_DSN_PUBLIC_KEY` to require a key.
 
 ## Security
 
 This server holds your GitHub tokens and can push code, so:
 
 1. It listens on **127.0.0.1 only**, unless you set `ORCH_DASHBOARD_HOST` (the Docker image does; publish it on `127.0.0.1` only).
-2. Requests must have a `Host` of `localhost`/`127.0.0.1`/`[::1]` on Code Akos's port (blocks DNS rebinding), and state-changing requests are rejected if `Origin`/`Sec-Fetch-Site` say they came from another site.
+2. Requests must have a `Host` of `localhost`/`127.0.0.1`/`[::1]` on Code Akos's port (blocks DNS rebinding), and state changing requests are rejected if `Origin`/`Sec-Fetch-Site` say they came from another site.
 3. Every `/api` route needs a **secret token**, kept in `<data folder>/token` (mode `0600`). The link printed at startup exchanges it for an `HttpOnly; SameSite=Strict` cookie. Treat the token file like an SSH key.
 4. Strict CSP, `X-Frame-Options: DENY`, `nosniff`, `no-referrer`, and `no-store` on API responses.
 5. Git and the model's tools use argument arrays. The only shell is your own check command.
@@ -47,7 +47,7 @@ This server holds your GitHub tokens and can push code, so:
 
 Settings live in a `.env` file. The desktop app's setup writes it on first launch, and **Settings** in the dashboard header edits it later. [From source](#running-from-source), the terminal setup does the same; you can also copy `.env.example` to `.env` and edit it, where every variable has a default.
 
-The setup, in the desktop app and in the terminal, differs from a hand-written `.env` in three ways:
+The setup, in the desktop app and in the terminal, differs from a hand written `.env` in three ways:
 
 - It always turns on error tracking and the resolver. `ORCH_ERRORS_ENABLED=0` and `ORCH_RESOLVER_ENABLED=0` still work when set by hand.
 - It requires at least one model, because the resolver needs one.
@@ -71,7 +71,7 @@ The setup, in the desktop app and in the terminal, differs from a hand-written `
 | `ORCH_LLM_PROVIDERS` | `ollama,deepseek,anthropic` | The providers to try, in order, for both triage and the resolver; the first is used and the rest are fallbacks when it fails. A provider that is not set up is skipped by default, and is an error when you name it here. |
 | `ORCH_TRIAGE_PROVIDERS` / `ORCH_RESOLVER_PROVIDERS` | `ORCH_LLM_PROVIDERS` | The same, for one purpose only. |
 
-With no provider set up for triage, new errors are triaged by built-in rules. When providers are set up and all of them fail, the rules are not used as a substitute: the error is recorded as `ERRORED` and can be triaged again from the dashboard.
+With no provider set up for triage, new errors are triaged by built in rules. When providers are set up and all of them fail, the rules are not used as a substitute: the error is recorded as `ERRORED` and can be triaged again from the dashboard.
 
 ### Errors
 
@@ -100,7 +100,7 @@ With no provider set up for triage, new errors are triaged by built-in rules. Wh
 | `ORCH_RESOLVER_MAX_CONCURRENT_FIXES` | `3` | |
 | `ORCH_RESOLVER_MAX_TURNS` | `20` | The most model turns one fix attempt may take before it fails with "exceeded the maximum number of turns". |
 | `ORCH_RESOLVER_MAX_ATTEMPTS` | `3` | How many failed attempts one issue gets before the resolver stops on its own. A failed attempt waits 15 minutes before the next try, doubling each time. Running an issue from the dashboard ignores the limit. |
-| `ORCH_RESOLVER_RETRY_SKIPPED_ATTEMPTS` | off | Testing aid: re-attempt `SKIPPED` issues each poll. `PR_OPEN` is never retried. |
+| `ORCH_RESOLVER_RETRY_SKIPPED_ATTEMPTS` | off | Testing aid: attempt again `SKIPPED` issues each poll. `PR_OPEN` is never retried. |
 
 The resolver attempts every open GitHub issue Code Akos filed for an existing project, whatever its triage tags, unless an earlier attempt opened a pull request or was skipped. A single attempt is capped at `ORCH_RESOLVER_MAX_TURNS` model turns (20 by default). Every turn is also appended to a file per issue, `<data folder>/logs/<owner>-<repo>-issue-<n>.log` (folder set by `ORCH_RESOLVER_LOG_DIR`), and a failed attempt's error names that file. It runs your check command as you, on your machine.
 
@@ -136,7 +136,7 @@ web/                   React + Vite + Tailwind v4 + shadcn/ui (Radix). See DESIG
 test/                  real git and real SQLite; only GitHub's network API and the paid model are faked
 ```
 
-The only runtime dependency of the server is `express`; SQLite is Node's built-in `node:sqlite`.
+The only runtime dependency of the server is `express`; SQLite is Node's built in `node:sqlite`.
 
 ```bash
 npm run dev               # API with auto-restart + Vite hot reload on http://localhost:5173
@@ -162,11 +162,11 @@ npm run test:e2e          # Playwright against the built macOS app; build first
 
 Pushing a `v*` tag builds all three on GitHub Actions and attaches them to the release, unsigned. Only the Apple Silicon build is tested.
 
-The built app looks for a newer release (`desktop/updates.js`) 15 seconds after the dashboard opens and then every 24 hours, using GitHub's latest-release API, and offers this computer's file in a dialog. It installs nothing itself. The automatic check, and a version the user chose to skip, are kept in `update-state.json` in the user-data folder; a run from the repository (`npm start`) never checks on its own.
+The built app looks for a newer release (`desktop/updates.js`) 15 seconds after the dashboard opens and then every 24 hours, using GitHub's latest release API, and offers this computer's file in a dialog. It installs nothing itself. The automatic check, and a version the user chose to skip, are kept in `update-state.json` in the user data folder; a run from the repository (`npm start`) never checks on its own.
 
-In the built app, `.env` lives in the app's user-data folder, separate from the repo's and kept across updates: `~/Library/Application Support/Code Akos/.env` on macOS, `%APPDATA%\Code Akos\.env` on Windows, `~/.config/Code Akos/.env` on Linux. The server runs with that folder as its working directory. Builds before 1.1.0 kept it inside the app; the first launch of a newer build copies it over. The macOS build is ad-hoc signed (`mac.identity: "-"`): an Apple Silicon Mac refuses to run an Electron app with no signature at all. It is not notarized, so macOS blocks the first open of a downloaded copy until it is allowed in System Settings › Privacy & Security. Removing that step for users needs a Developer ID certificate and notarization; on Windows, a code-signing certificate.
+In the built app, `.env` lives in the app's user data folder, separate from the repo's and kept across updates: `~/Library/Application Support/Code Akos/.env` on macOS, `%APPDATA%\Code Akos\.env` on Windows, `~/.config/Code Akos/.env` on Linux. The server runs with that folder as its working directory. Builds before 1.1.0 kept it inside the app; the first launch of a newer build copies it over. The macOS build is ad hoc signed (`mac.identity: "-"`): an Apple Silicon Mac refuses to run an Electron app with no signature at all. It is not notarized, so macOS blocks the first open of a downloaded copy until it is allowed in System Settings › Privacy & Security. Removing that step for users needs a Developer ID certificate and notarization; on Windows, a code signing certificate.
 
-The end-to-end tests give each test its own APFS clone of the built app, fake Ollama, DeepSeek and Anthropic servers, and a stubbed folder picker, so they never touch `~/.code-akos` or a real API. The cases are listed in `desktop/tests/CASES.md`.
+The end to end tests give each test its own APFS clone of the built app, fake Ollama, DeepSeek and Anthropic servers, and a stubbed folder picker, so they never touch `~/.code-akos` or a real API. The cases are listed in `desktop/tests/CASES.md`.
 
 To add another workflow, implement `Workflow` from `server/workflows/types.ts` (`id`, `title`, `routes(router)`, optional `start`/`stop`, and `ingestRoutes(router)` only if it needs unauthenticated outside traffic), switch it on in `server/workflows/index.ts`, and register a panel for its `id` in `web/src/components/extensions.ts`.
 

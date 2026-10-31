@@ -1,11 +1,11 @@
 ---
-title: "Self-hosted error tracking without Docker"
-description: "Code Akos is self-hosted error tracking in one process with SQLite: no Docker, no database server. What it stores, where, and what leaves your machine."
+title: "Self hosted error tracking without Docker"
+description: "Code Akos is self hosted error tracking in one process with SQLite: no Docker, no database server. What it stores, where, and what leaves your machine."
 ---
 
-# Self-hosted error tracking
+# Self hosted error tracking
 
-Self-hosting your error tracker means your errors, stack traces and source code stay on hardware you control. The catch is usually the setup: most self-hosted trackers need Docker, a database server and a background queue. Code Akos needs none of these. It is a single process that stores everything in SQLite files in one folder, and it runs as a desktop app or on a small server.
+Self hosting your error tracker means your errors, stack traces and source code stay on hardware you control. The catch is usually the setup: most self hosted trackers need Docker, a database server and a background queue. Code Akos needs none of these. It is a single process that stores everything in SQLite files in one folder, and it runs as a desktop app or on a small server.
 
 This page explains what Code Akos runs, what it stores and exactly what leaves your machine.
 
@@ -72,7 +72,7 @@ Code Akos sends no analytics or telemetry of its own.
 | | What you need to run it |
 |---|---|
 | Code Akos | The desktop app, or Node.js 24+ and git on a server |
-| Sentry (self-hosted) | Docker Compose with 53 services; 4 cores, 16 GB RAM and 16 GB swap |
+| Sentry (self hosted) | Docker Compose with 53 services; 4 cores, 16 GB RAM and 16 GB swap |
 | GlitchTip | The app plus PostgreSQL; from 256 MB RAM |
 | Bugsink | One container; SQLite, MySQL or PostgreSQL |
 
@@ -80,4 +80,4 @@ For features, not just footprint, see the [comparison of Sentry alternatives](se
 
 ## Running on a server
 
-The desktop app suits running Code Akos on the computer you develop on. For an always-on Linux server, run it from source with Node.js 24 or newer: see [installation](installation.md#run-code-akos-on-a-server) and [running from source](reference.md#running-from-source). The [security section of the reference](reference.md#security) covers how the dashboard is protected.
+The desktop app suits running Code Akos on the computer you develop on. For an always on Linux server, run it from source with Node.js 24 or newer: see [installation](installation.md#run-code-akos-on-a-server) and [running from source](reference.md#running-from-source). The [security section of the reference](reference.md#security) covers how the dashboard is protected.

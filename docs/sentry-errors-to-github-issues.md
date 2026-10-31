@@ -17,7 +17,7 @@ The [getting started guide](getting-started.md) walks through each step, with sc
 
 ## Token permissions
 
-Use a fine-grained personal access token limited to the repository:
+Use a fine grained personal access token limited to the repository:
 
 | What Code Akos does | Permissions needed |
 |---|---|
@@ -58,7 +58,7 @@ If GitHub cannot be reached, Code Akos tries again on the next event, at most on
 
 Local variables and request bodies are never written to the issue, so personal data in them does not end up on GitHub.
 
-## Follow-up comments
+## Follow up comments
 
 When an error keeps happening, Code Akos comments on its issue at 100, 1,000 and 10,000 occurrences with the count and when it was last seen. You can change these numbers in Settings. That way a rare bug and a bug hitting every user look different in your issue list.
 

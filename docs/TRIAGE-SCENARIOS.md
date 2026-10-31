@@ -25,7 +25,7 @@ The one thing filing takes from triage is the `bot-safe` label, which is what th
 
 ## Scenarios
 
-`filed` is the result by default; "filed*" is the result when the project files stack-less errors.
+`filed` is the result by default; "filed*" is the result when the project files stackless errors.
 
 ### 1. Invalid issues: not worth reporting
 
@@ -46,8 +46,8 @@ Anything sent as an error is treated as real.
 | Situation | Tags | Filed |
 |---|---|---|
 | Exception that arrived without frames | `no-stack-trace` `needs-human` | no; filed* unlabelled |
-| Error-level log line ("payment gateway returned 500") | `no-stack-trace` `needs-human` | no; filed* unlabelled |
-| Warning-level log line | `no-stack-trace` `needs-human` | no, below the minimum level, even with the setting on |
+| Error level log line ("payment gateway returned 500") | `no-stack-trace` `needs-human` | no; filed* unlabelled |
+| Warning level log line | `no-stack-trace` `needs-human` | no, below the minimum level, even with the setting on |
 
 ### 3. Valid issues with a stack trace
 
@@ -65,7 +65,7 @@ Anything sent as an error is treated as real.
 
 | Situation | Triage | Filed |
 |---|---|---|
-| Bot-safe-looking crash at `warning` | `bot-safe` | no, below the minimum level |
+| That looks bot safe crash at `warning` | `bot-safe` | no, below the minimum level |
 | `fatal` with a stack trace | `needs-human` | yes |
 | Reported to a project that was deleted | `needs-human` | no |
 
@@ -79,7 +79,7 @@ Anything sent as an error is treated as real.
 | Model is down, slow, malformed, or leaves out its wording | rules answer (`source: rules`), wording never contradicts the model's verdict |
 | Triage throws | status `ERRORED` with the reason; the error is **still filed** |
 
-### 6. Repeats and re-runs
+### 6. Repeats and runs again
 
 | Situation | Result |
 |---|---|
@@ -95,11 +95,11 @@ Anything sent as an error is treated as real.
 |---|---|---|
 | Unit | `triage.test.ts` | each rule, the model's JSON handling and fallbacks |
 | Integration | `scenarios.test.ts` | event → triage → filing → labels, through the real `Ingestor` |
-| Integration | `ingest.test.ts` | queueing, pending state, failure, re-triage |
-| Store / HTTP | `store.test.ts`, `routes.test.ts` | the stored record, the re-triage endpoint |
+| Integration | `ingest.test.ts` | queueing, pending state, failure, triage again |
+| Store / HTTP | `store.test.ts`, `routes.test.ts` | the stored record, the triage again endpoint |
 | UI logic | `lifecycle.test.ts` | stages and the funnel |
 
-**Not covered:** the model's real answers (only stand-ins are tested; its quality needs a hand-labelled set of real errors run against Ollama), and the UI components (no browser or component tests yet).
+**Not covered:** the model's real answers (only stubs are tested; its quality needs a hand labelled set of real errors run against Ollama), and the UI components (no browser or component tests yet).
 
 ## Known limits of the rules
 
