@@ -8,6 +8,11 @@
       "url": "http://localhost:11434",
       "model": "qwen3:14b"
     },
+    "qwen2.5-3b": {
+      "kind": "ollama",
+      "url": "http://localhost:11434",
+      "model": "qwen2.5:3b"
+    },
     "qwen2.5-coder-7b": {
       "kind": "ollama",
       "url": "http://localhost:11434",
