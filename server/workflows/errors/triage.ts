@@ -22,6 +22,15 @@ const INFRA = /\b(ECONNREFUSED|ECONNRESET|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|timed? ?
 /** The machine or account is not set up to allow this; no code change fixes it. */
 const PERMISSION = /\b(not allowed|permission denied|operation not permitted|access denied|assistive access|EACCES|EPERM|unauthori[sz]ed|forbidden)\b/i;
 
+/**
+ * Whether an event can be a test message at all: nothing was thrown, it was sent at a level a test is sent at, and
+ * it does not report a failure. The rules and the model both decide which of these are tests; neither may call
+ * anything else one, since dismissing a real failure costs more than reading a test.
+ */
+export function couldBeTest(event: NormalizedEvent): boolean {
+  return event.exceptions.length === 0 && TEST_LEVELS.has(event.level) && !FAILURE_WORDS.test(event.message);
+}
+
 /** The resolver attempts every filed issue whatever its tags, so the way to keep it off one is to close the issue. */
 const NO_CODE_FIX = 'A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.';
 
@@ -80,7 +89,7 @@ export function rulesTriage(event: NormalizedEvent): TriageResult {
 
   if (!thrown) {
     const source = `your ${event.platform} app${event.tags.service ? ` (${event.tags.service})` : ''}`;
-    if (TEST_WORDS.test(event.message) && !FAILURE_WORDS.test(event.message) && TEST_LEVELS.has(event.level)) {
+    if (couldBeTest(event) && TEST_WORDS.test(event.message)) {
       return result(
         ['test-event', ...noStack],
         `This looks like a test message, not a real failure. ${what} was sent on purpose from ${source} at level “${event.level}”. Nothing threw an exception, so there is no culprit to find.`,
@@ -185,7 +194,7 @@ export function modelTriager(llm: LlmGateway, { timeoutMs = 60_000 }: ModelTriag
     const smallFix = verdict.small_fix && hasCodeToFix(event); // a log line or a library failure is not a small fix
     const named = (Array.isArray(verdict.tags) ? verdict.tags : []).filter((t): t is TriageTag => TRIAGE_TAGS.includes(t as TriageTag) && t !== 'bot-safe');
     const tags = new Set<TriageTag>(named);
-    if (thrown) tags.delete('test-event'); // a real exception is not a test
+    if (!couldBeTest(event)) tags.delete('test-event'); // a real exception, an error-level message or a reported failure is not a test
     if (stackOf(event).length === 0) tags.add('no-stack-trace');
     // "Inside a library" is a fact about the stack: it needs a stack, and none of its frames in the app.
     if (stackOf(event).length === 0 || stackOf(event).some((f) => f.inApp)) tags.delete('third-party');

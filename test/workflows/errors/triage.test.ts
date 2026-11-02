@@ -142,6 +142,20 @@ describe('modelTriager: what the model does not get to overrule', () => {
     assert.ok((await ask(bare, { small_fix: false, message: 'm', suggestion: 's', tags: ['needs-human'] })).tags.includes('no-stack-trace'));
   });
 
+  it('drops test-event, and its "Don\'t report it", from a message sent as an error or one that reports a failure', async () => {
+    const logged = (message: string, level: string) =>
+      normalized({ event_id: 'l'.repeat(32), platform: 'python', level, message, threads: { values: [{ crashed: false, current: true, stacktrace: { frames: [{ filename: 'pay.py', function: 'charge', lineno: 9, in_app: true }] } }] } });
+    const testLike = { small_fix: false, message: 'A test.', suggestion: "Don't report it", tags: ['test-event'] };
+    for (const event of [logged('Payment test failed: card declined', 'error'), logged('unit test runner crashed', 'warning'), logged('sentry test please ignore', 'error')]) {
+      const r = await ask(event, testLike);
+      assert.ok(!r.tags.includes('test-event'), `${event.message} is not a test`);
+      assert.ok(r.tags.includes('needs-human'));
+      assert.doesNotMatch(r.suggestion, /^Don't report it/);
+    }
+    const ping = await ask(normalized({ event_id: 'p'.repeat(32), platform: 'python', level: 'info', message: 'ping from staging' }), testLike);
+    assert.deepEqual([ping.tags, ping.suggestion], [['test-event', 'no-stack-trace'], "Don't report it"], 'an info-level message the model calls a test stays one');
+  });
+
   it('only calls something third-party when its stack really never enters the app', async () => {
     const answer = { small_fix: false, message: 'm', suggestion: 's', tags: ['third-party'] };
     assert.deepEqual((await ask(crash('NameError', "name 'x' is not defined"), answer)).tags, ['needs-human'], 'the top frame is app code');
