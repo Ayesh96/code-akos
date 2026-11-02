@@ -1,9 +1,22 @@
 {
   "profiles": {
-    "rules": { "kind": "rules" },
-    "qwen3-14b": { "kind": "ollama", "url": "http://localhost:11434", "model": "qwen3:14b" },
-    "qwen2.5-coder-7b": { "kind": "ollama", "url": "http://localhost:11434", "model": "qwen2.5-coder:7b" },
-    "deepseek": { "kind": "deepseek", "model": "deepseek-flash", "apiKeyEnv": "ORCH_DEEPSEEK_API_KEY" },
-    "anthropic-haiku": { "kind": "anthropic", "model": "claude-haiku-4-5", "apiKeyEnv": "ORCH_ANTHROPIC_API_KEY" }
+    "rules": {
+      "kind": "rules"
+    },
+    "qwen3-14b": {
+      "kind": "ollama",
+      "url": "http://localhost:11434",
+      "model": "qwen3:14b"
+    },
+    "qwen2.5-coder-7b": {
+      "kind": "ollama",
+      "url": "http://localhost:11434",
+      "model": "qwen2.5-coder:7b"
+    },
+    "anthropic-haiku": {
+      "kind": "anthropic",
+      "model": "claude-haiku-4-5",
+      "apiKeyEnv": "ORCH_ANTHROPIC_API_KEY"
+    }
   }
 }
