@@ -26,8 +26,11 @@
     "build": "npm --prefix web run build",
     "postinstall": "npm --prefix web install",
     "typecheck": "tsc --noEmit && npm --prefix web run typecheck",
-    "test": "node --test \"test/*.test.ts\" \"test/llm/*.test.ts\" \"test/projects/*.test.ts\" \"test/workflows/*.test.ts\" \"test/workflows/*/*.test.ts\" && npm --prefix web test",
-    "format": "prettier --write \"server/**/*.ts\" \"test/**/*.ts\""
+    "test": "node --test \"test/*.test.ts\" \"test/evals/*.test.ts\" \"test/llm/*.test.ts\" \"test/projects/*.test.ts\" \"test/workflows/*.test.ts\" \"test/workflows/*/*.test.ts\" && npm --prefix web test",
+    "format": "prettier --write \"server/**/*.ts\" \"test/**/*.ts\" \"evals/**/*.ts\"",
+    "eval:triage": "node evals/triage/run.ts",
+    "eval:grouping": "node evals/grouping/run.ts",
+    "eval:fix": "node evals/fix/run.ts"
   },
   "dependencies": {
     "express": "^5.2.1"

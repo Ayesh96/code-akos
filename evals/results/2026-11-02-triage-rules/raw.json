@@ -1,0 +1,1458 @@
+{
+  "profile": "rules",
+  "spec": {
+    "kind": "rules"
+  },
+  "date": "2026-11-02",
+  "commit": "5f688cb",
+  "summary": {
+    "cases": 37,
+    "trials": 1,
+    "attempts": 37,
+    "errored": 0,
+    "dangerousDismissals": [],
+    "precision": {
+      "hits": 10,
+      "total": 10,
+      "rate": 1,
+      "range": {
+        "low": 0.7224598312333834,
+        "high": 1
+      }
+    },
+    "recall": {
+      "hits": 10,
+      "total": 15,
+      "rate": 0.6666666666666666,
+      "range": {
+        "low": 0.41713125151212976,
+        "high": 0.8482389930530876
+      }
+    },
+    "falseSmallFixByDepth": {
+      "D2": {
+        "hits": 0,
+        "total": 1,
+        "rate": 0,
+        "range": {
+          "low": 0,
+          "high": 0.7934567085261071
+        }
+      },
+      "D3": {
+        "hits": 0,
+        "total": 1,
+        "rate": 0,
+        "range": {
+          "low": 0,
+          "high": 0.7934567085261071
+        }
+      },
+      "D4": {
+        "hits": 0,
+        "total": 3,
+        "rate": 0,
+        "range": {
+          "low": 0,
+          "high": 0.5615060804490177
+        }
+      },
+      "none": {
+        "hits": 0,
+        "total": 17,
+        "rate": 0,
+        "range": {
+          "low": 0,
+          "high": 0.18432366037156456
+        }
+      }
+    },
+    "byGrader": {
+      "small-fix": {
+        "hits": 32,
+        "total": 37,
+        "rate": 0.8648648648648649,
+        "range": {
+          "low": 0.7202227252929444,
+          "high": 0.9408679273749238
+        }
+      },
+      "no-dismissal": {
+        "hits": 37,
+        "total": 37,
+        "rate": 1,
+        "range": {
+          "low": 0.9059390425448564,
+          "high": 1
+        }
+      },
+      "tags": {
+        "hits": 36,
+        "total": 37,
+        "rate": 0.972972972972973,
+        "range": {
+          "low": 0.8617562156243666,
+          "high": 0.9952131489450924
+        }
+      },
+      "culprit": {
+        "hits": 37,
+        "total": 37,
+        "rate": 1,
+        "range": {
+          "low": 0.9059390425448564,
+          "high": 1
+        }
+      }
+    },
+    "unstableCases": [],
+    "medianMs": 0.005500000000012051
+  },
+  "records": [
+    {
+      "caseId": "py-nameerror-typo",
+      "trial": 1,
+      "result": {
+        "message": "NameError: name 'volume_upp' is not defined. Most likely culprit: handle_key (/app/remote/audio.py:41), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.6175870000000003,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names handle_key or audio.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-none-rstrip",
+      "trial": 1,
+      "result": {
+        "message": "AttributeError: 'NoneType' object has no attribute 'rstrip'. Most likely culprit: open_url (/app/remote/browser.py:27), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.1049030000000073,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names open_url or browser.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-keyerror-guard-removed",
+      "trial": 1,
+      "result": {
+        "message": "KeyError: 'user_id'. Thrown from handle (/app/handlers.py:12). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.3666120000000035,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": false,
+          "detail": "said not a small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names handle or handlers.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-unbound-local",
+      "trial": 1,
+      "result": {
+        "message": "UnboundLocalError: cannot access local variable 'total' where it is not associated with a value. Most likely culprit: invoice_total (/app/billing.py:63), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.047302000000001954,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names invoice_total or billing.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-none-subscript",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: 'NoneType' object is not subscriptable. Most likely culprit: first_hit (/app/search.py:19), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.019523999999989883,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names first_hit or search.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-indexerror-off-by-one",
+      "trial": 1,
+      "result": {
+        "message": "IndexError: list index out of range. Thrown from rows (/app/report.py:52). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.17874399999999468,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": false,
+          "detail": "said not a small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names rows or report.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-zero-division-empty",
+      "trial": 1,
+      "result": {
+        "message": "ZeroDivisionError: division by zero. Thrown from mean (/app/stats.py:8). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.01383600000002616,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": false,
+          "detail": "said not a small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names mean or stats.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-int-plus-str",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: unsupported operand type(s) for +: 'int' and 'str'. Thrown from add_item (/app/cart.py:34). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.010328000000015436,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": false,
+          "detail": "said not a small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names add_item or cart.py"
+        }
+      ]
+    },
+    {
+      "caseId": "js-undefined-id",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: Cannot read properties of undefined (reading 'id'). Most likely culprit: getUserId (static/main.3f9a8c1b.js:42), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.010919999999998709,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names getUserId or main.js"
+        }
+      ]
+    },
+    {
+      "caseId": "js-null-addlistener",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: Cannot read properties of null (reading 'addEventListener'). Most likely culprit: bindMenu (src/ui/menu.js:17), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.019210999999984324,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names bindMenu or menu.js"
+        }
+      ]
+    },
+    {
+      "caseId": "js-reference-not-defined",
+      "trial": 1,
+      "result": {
+        "message": "ReferenceError: formatDate is not defined. Most likely culprit: title (src/report.js:9), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.006235000000003765,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names title or report.js"
+        }
+      ]
+    },
+    {
+      "caseId": "js-not-a-function",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: cb is not a function. Most likely culprit: drain (src/queue.js:33), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0061210000000073705,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names drain or queue.js"
+        }
+      ]
+    },
+    {
+      "caseId": "go-nil-pointer",
+      "trial": 1,
+      "result": {
+        "message": "runtime.Error: invalid memory address or nil pointer dereference. Thrown from Total (internal/cart/cart.go:58). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.007195999999993319,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": false,
+          "detail": "said not a small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names Total or cart.go"
+        }
+      ]
+    },
+    {
+      "caseId": "lint-eslint-unused",
+      "trial": 1,
+      "result": {
+        "message": "LintError: ESLint: 'tmp' is assigned a value but never used (no-unused-vars). Most likely culprit: build (src/util.js:5), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.003465999999974656,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names build or util.js"
+        }
+      ]
+    },
+    {
+      "caseId": "hardneg-reference-test-word",
+      "trial": 1,
+      "result": {
+        "message": "ReferenceError: test is not defined. Most likely culprit: pay (src/checkout.js:71), in your own code. It matches a common small mistake, such as a missing check or import.",
+        "suggestion": "Report it. It looks like a small fix, so the resolver will try it.",
+        "tags": [
+          "bot-safe"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0034780000000012024,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said small fix, expected small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names pay or checkout.js"
+        }
+      ]
+    },
+    {
+      "caseId": "py-valueerror-config-d3",
+      "trial": 1,
+      "result": {
+        "message": "ValueError: invalid literal for int() with base 10: ''. Thrown from unit_price (/app/pricing.py:22). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.05945000000002665,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names unit_price or pricing.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-invariant-design-d4",
+      "trial": 1,
+      "result": {
+        "message": "InvariantError: order total does not match sum of lines (order 8841). Thrown from close_order (/app/orders.py:140). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.01137800000000766,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names close_order or orders.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-recursion-d2",
+      "trial": 1,
+      "result": {
+        "message": "RecursionError: maximum recursion depth exceeded. Thrown from expand (/app/tree.py:30). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0045400000000199725,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names expand or tree.py"
+        }
+      ]
+    },
+    {
+      "caseId": "py-keyerror-cache-d4",
+      "trial": 1,
+      "result": {
+        "message": "KeyError: 'session:9f3'. Thrown from touch (/app/session.py:77). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.00357000000002472,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names touch or session.py"
+        }
+      ]
+    },
+    {
+      "caseId": "js-custom-error-d4",
+      "trial": 1,
+      "result": {
+        "message": "PaymentRuleError: refund exceeds captured amount. Thrown from refund (src/payments/refund.js:88). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.004165000000000418,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names refund or refund.js"
+        }
+      ]
+    },
+    {
+      "caseId": "infra-econnrefused-node",
+      "trial": 1,
+      "result": {
+        "message": "Error: connect ECONNREFUSED 127.0.0.1:5432. This looks like a network or service problem rather than a bug in your code; it surfaced in connect (src/db.js:14).",
+        "suggestion": "Check the service or connection this call depends on. A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.",
+        "tags": [
+          "infrastructure",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.004270000000019536,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names connect or db.js"
+        }
+      ]
+    },
+    {
+      "caseId": "infra-permission-denied",
+      "trial": 1,
+      "result": {
+        "message": "PermissionError: [Errno 13] Permission denied: '/var/log/app.log'. This looks like a permissions or configuration problem in the environment rather than a bug in your code; it surfaced in open_log (/app/log.py:9).",
+        "suggestion": "Fix the permission or setting it names (for example by granting the access it asks for). A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.",
+        "tags": [
+          "infrastructure",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.004549999999994725,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names open_log or log.py"
+        }
+      ]
+    },
+    {
+      "caseId": "infra-assistive-access",
+      "trial": 1,
+      "result": {
+        "message": "RuntimeError: osascript is not allowed assistive access. This looks like a permissions or configuration problem in the environment rather than a bug in your code; it surfaced in press (/app/remote/keys.py:33).",
+        "suggestion": "Fix the permission or setting it names (for example by granting the access it asks for). A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.",
+        "tags": [
+          "infrastructure",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0040180000000020755,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names press or keys.py"
+        }
+      ]
+    },
+    {
+      "caseId": "infra-http-503",
+      "trial": 1,
+      "result": {
+        "message": "HttpError: Request failed with status 503 Service Unavailable. This looks like a network or service problem rather than a bug in your code; it surfaced in get (src/api/client.js:40).",
+        "suggestion": "Check the service or connection this call depends on. A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.",
+        "tags": [
+          "infrastructure",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0033720000000130312,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names get or client.js"
+        }
+      ]
+    },
+    {
+      "caseId": "infra-disk-full",
+      "trial": 1,
+      "result": {
+        "message": "OSError: [Errno 28] No space left on device. Thrown from write_csv (/app/export.py:51). It is not an obvious small fix.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.004031999999995151,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": false,
+          "detail": "missing infrastructure"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names write_csv or export.py"
+        }
+      ]
+    },
+    {
+      "caseId": "third-party-axios",
+      "trial": 1,
+      "result": {
+        "message": "TypeError: Cannot read properties of undefined (reading 'headers'). The stack never enters your own code; it fails inside a library, at dispatchRequest (node_modules/axios/lib/core/dispatchRequest.js:53).",
+        "suggestion": "Check the library version and how your code calls it. A person should look at this one.",
+        "tags": [
+          "third-party",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0045849999999916236,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "third-party-sqlalchemy",
+      "trial": 1,
+      "result": {
+        "message": "InvalidRequestError: This Session is in prepared state. The stack never enters your own code; it fails inside a library, at _connection_for_bind (/usr/lib/python3/site-packages/sqlalchemy/orm/session.py:1110).",
+        "suggestion": "Check the library version and how your code calls it. A person should look at this one.",
+        "tags": [
+          "third-party",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0038400000000251566,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "nostack-exception",
+      "trial": 1,
+      "result": {
+        "message": "ValueError: bad input. It arrived without a stack trace, so the culprit cannot be located.",
+        "suggestion": "Make sure the SDK attaches stack traces (and source maps, for browser code), then wait for the next occurrence.",
+        "tags": [
+          "no-stack-trace",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.005500000000012051,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "nostack-error-message",
+      "trial": 1,
+      "result": {
+        "message": "A “error” log message with no stack trace: “Job 8841 failed”. Nothing in the code can be pointed at as the cause.",
+        "suggestion": "Report it only if someone recognises it. To make it actionable, send it as an exception so it carries a stack trace.",
+        "tags": [
+          "no-stack-trace",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.10051200000000904,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "test-sentry-setup",
+      "trial": 1,
+      "result": {
+        "message": "This looks like a test message, not a real failure. “Test message from Sentry setup” was sent on purpose from your python app at level “info”. Nothing threw an exception, so there is no culprit to find.",
+        "suggestion": "Don't report it: this is not a valid issue. It is safe to ignore.",
+        "tags": [
+          "test-event",
+          "no-stack-trace"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.25068899999999417,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "a test message: dismissing is allowed"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "test-hello-world",
+      "trial": 1,
+      "result": {
+        "message": "This looks like a test message, not a real failure. “hello world” was sent on purpose from your javascript app at level “info”. Nothing threw an exception, so there is no culprit to find.",
+        "suggestion": "Don't report it: this is not a valid issue. It is safe to ignore.",
+        "tags": [
+          "test-event",
+          "no-stack-trace"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0887480000000096,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "a test message: dismissing is allowed"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "test-please-ignore",
+      "trial": 1,
+      "result": {
+        "message": "This looks like a test message, not a real failure. “please ignore: testing alerts” was sent on purpose from your python app at level “warning”. Nothing threw an exception, so there is no culprit to find.",
+        "suggestion": "Don't report it: this is not a valid issue. It is safe to ignore.",
+        "tags": [
+          "test-event",
+          "no-stack-trace"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0029529999999908796,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "a test message: dismissing is allowed"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "test-debug-testing",
+      "trial": 1,
+      "result": {
+        "message": "This looks like a test message, not a real failure. “testing 123” was sent on purpose from your python app at level “debug”. Nothing threw an exception, so there is no culprit to find.",
+        "suggestion": "Don't report it: this is not a valid issue. It is safe to ignore.",
+        "tags": [
+          "test-event",
+          "no-stack-trace"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0022099999999909414,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "a test message: dismissing is allowed"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "hardneg-test-runner-crashed",
+      "trial": 1,
+      "result": {
+        "message": "A “error” message logged from run_suite (/app/ci/run.py:61): “unit test runner crashed”. Nothing crashed; the code reported this on purpose, so the place that logged it is the starting point.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.004383999999987509,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "hardneg-payment-test-failed",
+      "trial": 1,
+      "result": {
+        "message": "A “error” message logged from charge (src/pay.js:29): “Payment test failed: card declined”. Nothing crashed; the code reported this on purpose, so the place that logged it is the starting point.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.0030579999999815755,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "nothing to point at"
+        }
+      ]
+    },
+    {
+      "caseId": "logged-assistive-access",
+      "trial": 1,
+      "result": {
+        "message": "A “error” message logged from display_sleep (main.py:131): “Display sleep failed: assistive access not allowed”. Nothing crashed; the code reported this on purpose, so the place that logged it is the starting point. The wording points to a permissions or configuration problem in the environment.",
+        "suggestion": "Fix the permission or setting it names. A code change is unlikely to help; if it was filed on GitHub, close the issue so the resolver does not attempt one.",
+        "tags": [
+          "infrastructure",
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.002966000000014901,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names display_sleep or main.py"
+        }
+      ]
+    },
+    {
+      "caseId": "logged-cache-skip",
+      "trial": 1,
+      "result": {
+        "message": "A “error” message logged from rebuild (/app/cache.py:88): “Cache rebuild skipped: key missing”. Nothing crashed; the code reported this on purpose, so the place that logged it is the starting point.",
+        "suggestion": "Report it, and have a person look first. It is not a clear small fix for the resolver.",
+        "tags": [
+          "needs-human"
+        ],
+        "source": "rules"
+      },
+      "error": null,
+      "ms": 0.002655000000004293,
+      "grades": [
+        {
+          "grader": "small-fix",
+          "passed": true,
+          "detail": "said not a small fix, expected not a small fix"
+        },
+        {
+          "grader": "no-dismissal",
+          "passed": true,
+          "detail": "kept a real failure"
+        },
+        {
+          "grader": "tags",
+          "passed": true,
+          "detail": "tags as expected"
+        },
+        {
+          "grader": "culprit",
+          "passed": true,
+          "detail": "names rebuild or cache.py"
+        }
+      ]
+    }
+  ]
+}

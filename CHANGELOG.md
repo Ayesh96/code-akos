@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **Model triage can no longer hide a real failure as a test.** A model could tag an error-level message, or one that reports a failure ("Payment test failed: card declined"), as a test message and say "Don't report it". The model's test verdict now counts only where the rule-based triage would allow one: no exception, sent at debug, info or warning, and no failure words. Found by the new triage eval (`evals/`).
+
 ## 1.3.0
 
 - **Turns per attempt is a setting.** A fix attempt was capped at 20 model turns with no way to change it, so slower models failed with "exceeded the maximum number of turns". Set **Model turns per attempt** on the Resolver step of Settings, or `ORCH_RESOLVER_MAX_TURNS`. The error now says how many turns were allowed.
