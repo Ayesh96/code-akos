@@ -57,7 +57,9 @@ extra:
       - reject
       - manage
 
-copyright: <a href="#__consent">Change cookie settings</a>
+# The author credit links to the case study on the author's own site, so readers and search engines
+# can tie the product to the person who built it.
+copyright: Built by <a href="https://ayeshrehman.com/work/code-akos/">Ayesh Rehman</a> · <a href="#__consent">Change cookie settings</a>
 
 # Raw data stays in the repo but is not published. docs/internal/ is gitignored and never built.
 exclude_docs: |

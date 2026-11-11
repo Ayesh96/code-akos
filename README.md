@@ -83,6 +83,7 @@ Choose Sentry for tracing, alerts and teams. Choose GlitchTip or Bugsink for a s
 * [Documentation](https://ayesh96.github.io/code-akos/)
 * [Reference](docs/reference.md): settings, ports, and how data is stored
 * [Report a bug or ask for a feature](https://github.com/Ayesh96/code-akos/issues)
+* [How and why it was built](https://ayeshrehman.com/work/code-akos/), by Ayesh Rehman
 * [Contributing](CONTRIBUTING.md): sign off your commits with `git commit -s`, and run `npm run typecheck && npm test`
 
 ## License
