@@ -28,4 +28,5 @@ Facts that are easy to get wrong:
 ## Source
 
 - [Repository](https://github.com/Ayesh96/code-akos)
+- [Case study by the author, Ayesh Rehman](https://ayeshrehman.com/work/code-akos/): why it was built, design decisions, what failed at first.
 - [Releases](https://github.com/Ayesh96/code-akos/releases)
